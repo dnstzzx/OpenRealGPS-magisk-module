@@ -19,9 +19,6 @@ rm -rf $MODDIR/system
 #  exit
 #fi
 
-cp $MODDIR/bin/$ARCH/android.hardware.gnss@2.1-impl-qti.so /system/vendor/$LIBPATH/hw
-cp $MODDIR/bin/$ARCH/android.hardware.gnss@2.1-service-qti /system/vendor/bin/hw
-
 write_log 'Preparing files'
 ABI=`getprop ro.product.cpu.abi`
 if [[ ! $ABI ]]; then ABI=`resetprop ro.product.cpu.abi`; fi
@@ -33,6 +30,10 @@ case "$ABI" in
 *) write_log "Unsupported ABI: $ABI, exiting."; exit;;
 esac
 write_log "ABI: $ABI, ARCH: $ARCH, LIBPATH: $LIBPATH"
+
+cp $MODDIR/bin/$ARCH/android.hardware.gnss@2.1-impl-qti.so /system/vendor/$LIBPATH/hw
+cp $MODDIR/bin/$ARCH/android.hardware.gnss@2.1-service-qti /system/vendor/bin/hw
+write_log "origin libs copied"
 
 SOPATH=`find /system/vendor/$LIBPATH/hw -name 'android.hardware.gnss@?.?-impl*.so' | head -n 1`
 if [[ ! $SOPATH ]]; then write_log 'Unable to find GNSS library path, exiting.'; exit; fi
