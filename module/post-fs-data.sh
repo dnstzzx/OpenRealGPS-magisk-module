@@ -12,11 +12,15 @@ write_log 'post-fs-data start'
 write_log 'Cleaning up'
 rm -rf $MODDIR/system
 
-if [[ ! -e $MODDIR/i_have_read_the_warning ]]
-then
-  write_log 'User have not read the warning, exiting.'
-  exit
-fi
+
+#if [[ ! -e $MODDIR/i_have_read_the_warning ]]
+#then
+#  write_log 'User have not read the warning, exiting.'
+#  exit
+#fi
+
+cp $MODDIR/bin/$ARCH/android.hardware.gnss@2.1-impl-qti.so /system/vendor/$LIBPATH/hw
+cp $MODDIR/bin/$ARCH/android.hardware.gnss@2.1-service-qti /system/vendor/bin/hw
 
 write_log 'Preparing files'
 ABI=`getprop ro.product.cpu.abi`
